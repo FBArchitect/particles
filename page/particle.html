@@ -24,7 +24,7 @@
      * startX/startY: 粒子起始位置x,y
      * imgX/imgY: 图片左上角坐标，相对canvas左上角的偏移值
      * delay: 延迟执行动画时间，单位ms
-     * duration: 持续时间，单位ms
+     * duration: 单个粒子运动持续时间，单位ms
      * fillStyle: 粒子颜色值，可带半透明
      * particleOffset：粒子偏移值
      * ease: 缓动函数 提供linear，Quad，Cubic，Quart，Quint，Sine，Expo，Circ，Elastic，Back 包含easeIn,easeOut,easeInOut
@@ -37,8 +37,7 @@
         rows: 30,
         startX: 0,
         startY: 0,
-        imgX: 200,
-        imgY: 130,
+        imgY: 200,
         delay: 100,
         duration: 2000,
         interval: 10,
@@ -48,123 +47,10 @@
     });
     particles.animate();
 </script>
-
 <!--<img src="data:image/gif;base64,R0lGODlhDwAPAKECAAAAzMzM/////-->
 <!--wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4ML-->
 <!--wWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw=="-->
      <!--alt="Base64 encoded image" width="150" height="150"/>-->
-<!--<script type="text/javascript">-->
-    <!--(function(){-->
-        <!--var canvas = {},-->
-                <!--image = {};-->
-        <!--var particles = [];-->
-        <!--//获取canvas元素-->
-        <!--canvas.obj = document.getElementById('myCanvas');-->
-
-        <!--if(canvas.obj.getContext) {-->
-
-            <!--//获取渲染上下文-->
-            <!--canvas.ctx = canvas.obj.getContext('2d');-->
-
-            <!--//设置画布大小为屏幕宽高-->
-            <!--canvas.w = canvas.obj.width = document.body.clientWidth;-->
-            <!--canvas.h = canvas.obj.height = document.body.clientHeight;-->
-
-            <!--//新建一个image对象-->
-            <!--var img = new Image();-->
-
-            <!--//图像加载完后-->
-            <!--img.onload = function() {-->
-                <!--//把图像信息保存在image里面-->
-                <!--image.obj = img;-->
-                <!--image.w = img.width;-->
-                <!--image.h = img.height;-->
-                <!--image.x = parseInt(canvas.w/2 - image.w/2);-->
-                <!--image.y = parseInt(canvas.h/2 - image.h/2);-->
-
-                <!--console.log(image.x+","+image.y+","+image.w+","+image.h);-->
-                <!--//把图像绘制到画布坐标为(100,100)的地方-->
-                <!--canvas.ctx.drawImage(image.obj,image.x,image.y,image.w,image.h);-->
-
-                <!--image.imageData = canvas.ctx.getImageData(image.x,image.y,image.w,image.h);-->
-
-
-                <!--//计算出符合要求的像素-->
-                <!--calculate();-->
-
-                <!--//计算后绘到画布上-->
-                <!--draw();-->
-            <!--};-->
-
-            <!--//设置image的source-->
-            <!--img.src = '../images/five.jpg';-->
-        <!--}-->
-
-
-        <!--//计算并保存坐标-->
-        <!--function calculate() {-->
-            <!--var len = image.imageData.length;-->
-            <!--//只保存100行，30列的像素值-->
-            <!--var cols = 440, rows = 30;-->
-            <!--//设成150行，100列后每个单元的宽高-->
-            <!--var s_width = parseInt(image.w/cols), s_height = parseInt(image.h/rows);-->
-            <!--var pos = 0; //数组中的位置-->
-            <!--var par_x, par_y;  //粒子的x,y坐标-->
-            <!--var data = image.imageData.data;  //像素值数组-->
-            <!--for(var i = 0; i < cols; i++) {-->
-                <!--for(var j = 0; j < rows; j++) {-->
-                    <!--//计算(i,j)在数组中的R的坐标值-->
-                    <!--pos = (j*s_height*image.w + i*s_width)*4;-->
-                    <!--//判断像素透明度值是否符合要求-->
-                    <!--if(data[pos+3] > 100){-->
-                        <!--var particle = {-->
-                            <!--//x,y值都随机一下-->
-                            <!--x: image.x + i*s_width + (Math.random() - 0.5)*20,-->
-                            <!--y: image.y + j*s_height + (Math.random() - 0.5)*20-->
-                        <!--}-->
-                        <!--// 根据图像不同的色值来设定粒子色值-->
-                        <!--if(data[pos] > 200 && data[pos+1] > 200  && data[pos+2] > 200) {-->
-                            <!--particle.fillStyle = '#0c1328';-->
-                        <!--} else if(data[pos] > 200  && data[pos+1] < 50  && data[pos+2] < 50) {-->
-                            <!--particle.fillStyle = '#e95d5f';-->
-                        <!--} else if(data[pos] > 200  && data[pos+1] > 200){-->
-                            <!--particle.fillStyle = '#fffe00';-->
-                        <!--} else if(data[pos] < 50 && data[pos+1] < 50  && data[pos+2] < 50){-->
-                            <!--particle.fillStyle = '#241005';-->
-                        <!--}else if(data[pos+2] > 200 && data[pos] < 50 && data[pos+1] <50){-->
-                            <!--particle.fillStyle = '#0405ff';-->
-                        <!--}else if(data[pos] < 50  && data[pos+1] > 200){-->
-                            <!--particle.fillStyle = '#03ff00';-->
-                        <!--}else{-->
-                            <!--particle.fillStyle = '#0c1328';-->
-                        <!--}-->
-
-                        <!--//符合要求的粒子保存到数组里-->
-                        <!--particles.push(particle);-->
-                    <!--}-->
-                <!--}-->
-            <!--}-->
-        <!--};-->
-
-        <!--//绘图案-->
-        <!--function draw() {-->
-            <!--//清空画布-->
-            <!--canvas.ctx.clearRect(0,0,canvas.w,canvas.h);-->
-            <!--var len = particles.length;-->
-            <!--var curr_particle = null;-->
-
-            <!--for(var i = 0; i < len; i++) {-->
-
-                <!--curr_particle = particles[i];-->
-                <!--//设置填充颜色-->
-                <!--canvas.ctx.fillStyle = curr_particle.fillStyle;-->
-                <!--//绘粒子到画布上-->
-                <!--canvas.ctx.fillRect(curr_particle.x,curr_particle.y,1,1);-->
-            <!--}-->
-        <!--}-->
-    <!--}())-->
-
-<!--</script>-->
 </body>
 </html>
 
