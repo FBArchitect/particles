@@ -95,8 +95,8 @@ Particles.prototype = {
                     particle = {
                         start_x: userOptions.startX,
                         start_y: userOptions.startY,
-                        end_x: image.x + i * s_width + (Math.random() - 0.5) * 10 * userOptions.pOffset,
-                        end_y: image.y + j * s_height + (Math.random() - 0.5) * 10 * userOptions.pOffset,
+                        end_x: image.x + i * s_width + (Math.random() - 0.5) * 10 * userOptions.pOffset,// 增加粒子偏移量 松散程度
+                        end_y: image.y + j * s_height + (Math.random() - 0.5) * 10 * userOptions.pOffset,// 增加粒子偏移量 松散程度
                         fillStyle: userOptions.color,
                         delay: j / 20,   //单个粒子delay
                         currTime: 0,    // 计时动画执行的时间
@@ -125,6 +125,8 @@ Particles.prototype = {
             }
         }
     },
+
+    // 绘制最终位置 静态图
     _draw: function() {
         canvas.ctx.clearRect(0, 0, canvas.w, canvas.h);
         var length = this.array.length;
@@ -135,6 +137,8 @@ Particles.prototype = {
             canvas.ctx.fillRect(particle.end_x, particle.end_y, 1, 1)
         }
     },
+
+    // 循环调用绘制 动态路径
     _render: function() {
         canvas.ctx.clearRect(0, 0, canvas.w, canvas.h);
         var particlesArray = Particles.prototype.array;
@@ -168,11 +172,14 @@ Particles.prototype = {
                         canvas.ctx.fillRect(cur_particle.end_x, cur_particle.end_y, 1, 1);
                     }
                 }
+                // 时间变化的更平滑 动画效果更平滑
                 cur_particle.currTime += Math.random() + 0.5;
             }
         }
+        // 循环调用render方法 每次重新绘制所有节点新位置
         requestId = requestAnimationFrame(Particles.prototype._render);
     },
+
     _animate: function(delay) {
         if (startTime + delay < new Date().getTime()) {
             requestId = requestAnimationFrame(Particles.prototype._render);
